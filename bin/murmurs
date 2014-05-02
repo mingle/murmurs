@@ -51,6 +51,11 @@ opts = OptionParser.new do |opts|
     options[:skip_ssl_verify] = true
   end
 
+  opts.on_tail('-v', '--version') do
+    puts Gem.loaded_specs['murmurs'].version
+    exit(0)
+  end
+
   opts.on_tail('-h', '--help') do
     puts opts
     puts NOTES
