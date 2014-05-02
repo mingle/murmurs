@@ -14,10 +14,13 @@ options = {
 }
 
 NOTES = %Q{
-Environment variables as options:
-  --murmurs_url              MINGLE_MURMURS_URL
-  --mingle_access_key_id     MINGLE_ACCESS_KEY_ID
-  --mingle_access_secret_key MINGLE_ACCESS_SECRET_KEY
+You can also setup the following environment variables as options:
+  MINGLE_MURMURS_URL         => --murmurs_url
+  MINGLE_ACCESS_KEY_ID       => --mingle_access_key_id
+  MINGLE_ACCESS_SECRET_KEY   => --mingle_access_secret_key
+
+For further information about Mingle user access key id and secure key, please read:
+http://www.thoughtworks.com/products/docs/mingle/current/help/configuring_hmac_authentication.html
 }
 
 opts = OptionParser.new do |opts|
@@ -31,16 +34,16 @@ opts = OptionParser.new do |opts|
     options[:access_key_id] = v
   end
 
-  opts.on("-s", "--mingle_access_secret_key MINGLE_SECURE_ACCESS_KEY", "Mingle user secure access key") do |v|
+  opts.on("-s", "--mingle_access_secret_key MINGLE_SECURE_ACCESS_KEY", "Mingle user access secure key") do |v|
     options[:access_secret_key] = v
   end
 
-  opts.on("-b", "--git_branch GIT_BRANCH", "Git branch") do |v|
-    options[:git_branch] = v
+  opts.on_tail('-g', '--git', 'Process standard input of Git hook post-receive, and murmur each commits; default is false') do
+    options[:git] = true
   end
 
-  opts.on_tail('-g', '--git', 'Message is git push-receive stdin data, default is false') do
-    options[:git] = true
+  opts.on("-b", "--git_branch GIT_BRANCH", "Murmur Git commits in branch, default is master") do |v|
+    options[:git_branch] = v
   end
 
   opts.on_tail("-i", "--skip_ssl_verify", "Skip SSL verify in case the server is using self signed SSL certificate, default is false") do
@@ -49,6 +52,7 @@ opts = OptionParser.new do |opts|
 
   opts.on_tail('-h', '--help') do
     puts opts
+    puts NOTES
     exit(0)
   end
 
