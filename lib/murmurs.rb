@@ -16,8 +16,15 @@ module Murmurs
       puts "Nothing to murmur." unless options[:git]
       return
     end
-
-    http_post(url, {'murmur[body]' => msg}, options)
+    t = 20
+    Array(msg).each do |m|
+      if m.size > t
+        puts "murmur #{m[0..t]}..."
+      else
+        puts "murmur #{m}"
+      end
+      http_post(url, {'murmur[body]' => m}, options)
+    end
   end
 
   # input: git post receive stdin string
@@ -41,7 +48,9 @@ module Murmurs
              else
                "#{from_rev}..#{to_rev}"
              end
-      `git rev-list --pretty #{revs}`
+      `git rev-list #{revs}`.split("\n").map do |rev|
+        `git log -n 1 #{rev}`
+      end
     end
   end
 
