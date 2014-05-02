@@ -18,12 +18,18 @@ module Murmurs
     end
     t = 20
     Array(msg).each do |m|
+      git_log(options[:git], m)
+      http_post(url, {'murmur[body]' => m}, options)
+    end
+  end
+
+  def git_log(log, m)
+    if log
       if m.size > t
         puts "murmur #{m[0..t]}..."
       else
         puts "murmur #{m}"
       end
-      http_post(url, {'murmur[body]' => m}, options)
     end
   end
 
