@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby
+
+if ARGV[0] == '-h' || ARGV[0] == '--help'
+  puts "Usage murmurs-git GIT_REPOSITORY_PATH"
+  puts ""
+  puts "Install a git post-receive hook in hooks directory inside given git repository path"
+
+  exit(0)
+end
+
+def git_hooks_dir(git_repo_dir)
+  hooks = File.join(git_repo_dir, 'hooks')
+  if File.exists?(hooks)
+    hooks
+  else
+    hooks = File.join(git_repo_dir, '.git', 'hooks')
+    if File.exists?(hooks)
+      hooks
+    else
+      raise "Could not find hooks dir or .git/hooks dir in #{git_repo_dir}"
+    end
+  end
+end
+
+require 'fileutils'
+
+hooks = git_hooks_dir(ARGV[0])
+hook = File.join(hooks, 'post-receive')
+
+if File.exists?(hook)
+  puts "There is #{hook} file existing, please backup / remove it."
+  exit
+end
+
+File.open(hook, 'w') do |f|
+  f.write <<-BASH
+#!/usr/bin/env bash
+
+mingle_murmurs_url=$(git config hooks.minglemurmursurl)
+mingle_access_key_id=$(git config hooks.mingleaccesskeyid)
+mingle_access_secret_key=$(git config hooks.mingleaccesssecretkey)
+
+echo "$(cat)" | murmurs -g -b master -m "$mingle_murmurs_url" -k "$mingle_access_key_id" -s "$mingle_access_secret_key"
+BASH
+end
+FileUtils.chmod('+x', hook)
+puts "Installed #{hook}"
+puts "Please setup the following git config:"
+puts %Q{
+git config hooks.minglemurmursurl "https://<your_site>.mingle.thoughtworks.com/api/v2/projects/<your_project>/murmurs.xml"
+git config hooks.mingleaccesskeyid "MINGLE ACCESS KEY ID"
+git config hooks.mingleaccesssecretkey "MINGLE ACCESS SECRET KEY"
+
+For further information, please read this:
+http://www.thoughtworks.com/products/docs/mingle/current/help/configuring_hmac_authentication.html
+}

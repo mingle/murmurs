@@ -14,8 +14,7 @@ EOF
   s.add_dependency "api-auth", "1.1.0"
 
   s.bindir = "bin"
-  s.executables = ["murmurs"]
-  s.default_executable = "murmurs"
+  s.executables = ["murmurs", "murmurs-git"]
 
   s.files = ['README.md']
   s.files += Dir['bin/**/*']
