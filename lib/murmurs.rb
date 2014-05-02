@@ -5,10 +5,44 @@ require 'api-auth'
 
 module Murmurs
   def murmur(url, msg, options={})
+    if options[:git]
+      msg = git_commits_murmur(msg, options[:git_branch])
+    end
+
     if url.to_s !~ /\Ahttps?\:\/\/.+\/projects\/[^\/]+\/murmurs/
       raise "Invalid murmurs URL: #{url.inspect}"
     end
+    if msg.nil? || msg.empty?
+      puts "Nothing to murmur." unless options[:git]
+      return
+    end
+
     http_post(url, {'murmur[body]' => msg}, options)
+  end
+
+  # input: git post receive stdin string
+  # branch: git branch
+  def git_commits_murmur(input, branch)
+    data = input.split("\n").map do |l|
+      l.split
+    end.find do |l|
+      l[2] =~ /\Arefs\/heads\/#{branch}\z/
+    end
+
+    return if data.nil?
+
+    null_rev = '0' * 40
+    from_rev, to_rev, _ = data
+    if to_rev == null_rev # delete branch
+      "Someone deleted branch #{branch}."
+    else
+      revs = if from_rev == null_rev  # new branch
+               to_rev
+             else
+               "#{from_rev}..#{to_rev}"
+             end
+      `git rev-list --pretty #{revs}`
+    end
   end
 
   def http_post(url, params, options={})

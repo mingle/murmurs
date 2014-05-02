@@ -9,7 +9,8 @@ options = {
   :access_key_id => ENV['MINGLE_ACCESS_KEY_ID'],
   :access_secret_key => ENV['MINGLE_ACCESS_SECRET_KEY'],
   :skip_ssl_verify => false,
-  :git => false
+  :git => false,
+  :git_branch => 'master'
 }
 
 NOTES = %Q{
@@ -32,6 +33,14 @@ opts = OptionParser.new do |opts|
 
   opts.on("-s", "--mingle_access_secret_key MINGLE_SECURE_ACCESS_KEY", "Mingle user secure access key") do |v|
     options[:access_secret_key] = v
+  end
+
+  opts.on("-b", "--git_branch GIT_BRANCH", "Git branch") do |v|
+    options[:git_branch] = v
+  end
+
+  opts.on_tail('-g', '--git', 'Message is git push-receive stdin data, default is false') do
+    options[:git] = true
   end
 
   opts.on_tail("-i", "--skip_ssl_verify", "Skip SSL verify in case the server is using self signed SSL certificate, default is false") do
