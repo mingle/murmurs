@@ -65,4 +65,8 @@ GIT_INPUT
 
     assert_equal 0, @requests.size
   end
+
+  def test_extract_project_info
+    assert_equal 'proj@host', extract_project_info('https://host/api/v2/projects/proj/murmurs.xml')
+  end
 end

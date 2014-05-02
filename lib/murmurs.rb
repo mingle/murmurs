@@ -17,9 +17,17 @@ module Murmurs
       if msg.nil? || msg.empty?
         log(options[:log_level], "Nothing to murmur.")
       else
-        log(options[:log_level], msg)
+        log(options[:log_level], "murmur #{truncate(msg)} => #{extract_project_info(url)}")
         http_post(url, {:murmur => {:body => msg}}, options)
       end
+    end
+  end
+
+  def extract_project_info(url)
+    if url =~ /\/projects\/([^\/]+)\//
+      "#{$1}@#{URI(url).host}"
+    else
+      url
     end
   end
 
@@ -29,14 +37,13 @@ module Murmurs
     end
   end
 
+  def truncate(m, t=15)
+    m.size > t ? "#{m[0..t]}..." : m
+  end
+
   def log(level, m)
     if level == :info
-      t = 20
-      if m.size > t
-        puts "murmur #{m[0..t]}..."
-      else
-        puts "murmur #{m}"
-      end
+      puts m
     end
   end
 
