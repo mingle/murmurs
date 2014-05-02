@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'murmurs'
-  s.version = '0.0.1'
+  s.version = '0.0.2'
   s.summary = 'Post murmur to Mingle project murmurs'
   s.description = <<-EOF
 Use HMAC to create murmur in Mingle project.
