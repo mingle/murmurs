@@ -74,7 +74,7 @@ module Murmurs
     response = http.request(request)
 
     if response.code.to_i > 300
-      raise "error[#{request_class.name}][#{url}][#{response.code}]:\n#{response.body}"
+      response.error!
     end
   end
 end
