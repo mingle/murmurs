@@ -9,19 +9,23 @@ module Murmurs
 
   def murmur(url, msg, options={})
     if options[:git]
-      msg = git_commits_murmur(msg, options[:git_branch])
+      Array(git_commits(msg, options[:git_branch])).each do |msg|
+        murmur(url, msg, options.merge(:git => false))
+      end
+    else
+      validate_murmurs_url!(url)
+      if msg.nil? || msg.empty?
+        log(options[:log_level], "Nothing to murmur.")
+      else
+        log(options[:log_level], msg)
+        http_post(url, {:murmur => {:body => msg}}, options)
+      end
     end
+  end
 
+  def validate_murmurs_url!(url)
     if url.to_s !~ /\Ahttps?\:\/\/.+\/murmurs/
       raise InvalidMurmursURLError, "Invalid murmurs URL: #{url.inspect}"
-    end
-    if msg.nil? || msg.empty?
-      puts "Nothing to murmur." unless options[:git]
-      return
-    end
-    Array(msg).each do |m|
-      log(options[:log_level], m)
-      http_post(url, {:murmur => {:body => m}}, options)
     end
   end
 
@@ -38,7 +42,7 @@ module Murmurs
 
   # input: git post receive stdin string
   # branch: git branch
-  def git_commits_murmur(input, branch)
+  def git_commits(input, branch)
     data = input.split("\n").map do |l|
       l.split
     end.find do |l|
