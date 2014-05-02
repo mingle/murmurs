@@ -65,4 +65,6 @@ opts = OptionParser.new do |opts|
 end.parse!
 
 include Murmurs
-murmur(options.delete(:murmurs_url), ARGV[0] || ARGF.read, options)
+
+msg = ARGV[0] || (STDIN.tty? ? nil : STDIN.read)
+murmur(options.delete(:murmurs_url), msg, options)
