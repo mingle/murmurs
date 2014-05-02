@@ -40,6 +40,7 @@ opts = OptionParser.new do |opts|
 
   opts.on_tail('-g', '--git', 'Process standard input of Git hook post-receive, and murmur each commits; default is false') do
     options[:git] = true
+    options[:log_level] = :info
   end
 
   opts.on("-b", "--git_branch GIT_BRANCH", "Murmur Git commits in branch, default is master") do |v|

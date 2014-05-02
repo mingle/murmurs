@@ -37,4 +37,15 @@ class MurmursTest < Test::Unit::TestCase
       murmur('http://localhost:1234/haha', 'hello')
     end
   end
+
+  def test_murmur_git_commits
+    murmur('http://localhost:1234/murmurs', <<-GIT_INPUT, :git => true, :git_branch => 'master', :log_level => :error)
+886aa9a26fcd4976268de94135e7c00fbe35f9c1 d91bab265eac6f7c46f2249910f2e8a51439fa3a refs/heads/master
+invalid 1 refs/heads/wrong
+GIT_INPUT
+
+    assert_equal 5, @requests.size
+    m1 = {:body => "{\"murmur\":{\"body\":\"commit d91bab265eac6f7c46f2249910f2e8a51439fa3a\\nAuthor: Xiao Li \\u003Cswing1979@gmail.com\\u003E\\nDate:   Fri May 2 07:46:16 2014 -0700\\n\\n    add license and update authors name\\n\"}}", :content_length => 202, :content_type => "application/json"}
+    assert_equal(m1, @requests[0])
+  end
 end

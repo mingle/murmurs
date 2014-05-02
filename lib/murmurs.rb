@@ -19,15 +19,15 @@ module Murmurs
       puts "Nothing to murmur." unless options[:git]
       return
     end
-    t = 20
     Array(msg).each do |m|
-      git_log(options[:git], m)
+      log(options[:log_level], m)
       http_post(url, {:murmur => {:body => m}}, options)
     end
   end
 
-  def git_log(log, m)
-    if log
+  def log(level, m)
+    if level == :info
+      t = 20
       if m.size > t
         puts "murmur #{m[0..t]}..."
       else
