@@ -31,4 +31,10 @@ class MurmursTest < Test::Unit::TestCase
     assert_equal "application/json", req[:content_type]
     assert_equal 33, req[:content_length]
   end
+
+  def test_validate_murmurs_url
+    assert_raise InvalidMurmursURLError do
+      murmur('http://localhost:1234/haha', 'hello')
+    end
+  end
 end

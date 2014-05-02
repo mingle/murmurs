@@ -5,13 +5,15 @@ require 'api-auth'
 require 'json'
 
 module Murmurs
+  class InvalidMurmursURLError < StandardError; end
+
   def murmur(url, msg, options={})
     if options[:git]
       msg = git_commits_murmur(msg, options[:git_branch])
     end
 
     if url.to_s !~ /\Ahttps?\:\/\/.+\/murmurs/
-      raise "Invalid murmurs URL: #{url.inspect}"
+      raise InvalidMurmursURLError, "Invalid murmurs URL: #{url.inspect}"
     end
     if msg.nil? || msg.empty?
       puts "Nothing to murmur." unless options[:git]
