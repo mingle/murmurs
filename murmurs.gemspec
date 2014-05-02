@@ -7,7 +7,7 @@ Use HMAC to create murmur in Mingle project.
 Git post-receive hook to post murmurs when new commits pushed to Git server.
 EOF
   s.license = 'MIT'
-  s.authors = ["Mingle Team"]
+  s.authors = ["ThoughtWorks Mingle Team"]
   s.email = ['mingle-dev@thoughtworks.com']
   s.homepage = 'https://github.com/ThoughtWorksStudios/murmurs'
 
