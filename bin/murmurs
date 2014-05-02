@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'murmurs'
+require 'optparse'
+
+options = {
+  :murmurs_url => ENV['MINGLE_MURMURS_URL'],
+  :access_key_id => ENV['MINGLE_ACCESS_KEY_ID'],
+  :access_secret_key => ENV['MINGLE_ACCESS_SECRET_KEY'],
+  :skip_ssl_verify => false,
+  :git => false
+}
+
+NOTES = %Q{
+Environment variables as options:
+  --murmurs_url              MINGLE_MURMURS_URL
+  --mingle_access_key_id     MINGLE_ACCESS_KEY_ID
+  --mingle_access_secret_key MINGLE_ACCESS_SECRET_KEY
+}
+
+opts = OptionParser.new do |opts|
+  opts.banner = "Usage: murmurs [options] MESSAGE"
+
+  opts.on("-m", "--murmurs_url MINGLE_MURMURS_URL", "Mingle project murmurs url") do |v|
+    options[:murmurs_url] = v
+  end
+
+  opts.on("-k", "--mingle_access_key_id MINGLE_ACCESS_KEY_ID", "Mingle user access key id") do |v|
+    options[:access_key_id] = v
+  end
+
+  opts.on("-s", "--mingle_access_secret_key MINGLE_SECURE_ACCESS_KEY", "Mingle user secure access key") do |v|
+    options[:access_secret_key] = v
+  end
+
+  opts.on_tail("-i", "--skip_ssl_verify", "Skip SSL verify in case the server is using self signed SSL certificate, default is false") do
+    options[:skip_ssl_verify] = true
+  end
+
+  opts.on_tail('-h', '--help') do
+    puts opts
+    exit(0)
+  end
+
+end.parse!
+
+include Murmurs
+murmur(options.delete(:murmurs_url), ARGV[0] || ARGF.read, options)
