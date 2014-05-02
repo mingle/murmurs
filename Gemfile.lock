@@ -2,12 +2,14 @@ PATH
   remote: .
   specs:
     murmurs (0.0.1)
-      api-auth (= 1.1.0)
+      api-auth (>= 1.1.0)
+      json (>= 1.8.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
     api-auth (1.1.0)
+    json (1.8.1)
     rake (10.3.1)
 
 PLATFORMS

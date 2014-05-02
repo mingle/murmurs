@@ -11,7 +11,8 @@ EOF
   s.email = ['mingle-dev@thoughtworks.com']
   s.homepage = 'https://github.com/ThoughtWorksStudios/murmurs'
 
-  s.add_dependency "api-auth", "1.1.0"
+  s.add_dependency "api-auth", ">= 1.1.0"
+  s.add_dependency "json", ">= 1.8.1"
 
   s.bindir = "bin"
   s.executables = ["murmurs", "murmurs-git"]

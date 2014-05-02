@@ -2,6 +2,7 @@ require 'net/http'
 require 'net/https'
 require 'time'
 require 'api-auth'
+require 'json'
 
 module Murmurs
   def murmur(url, msg, options={})
@@ -9,7 +10,7 @@ module Murmurs
       msg = git_commits_murmur(msg, options[:git_branch])
     end
 
-    if url.to_s !~ /\Ahttps?\:\/\/.+\/projects\/[^\/]+\/murmurs/
+    if url.to_s !~ /\Ahttps?\:\/\/.+\/murmurs/
       raise "Invalid murmurs URL: #{url.inspect}"
     end
     if msg.nil? || msg.empty?
@@ -19,7 +20,7 @@ module Murmurs
     t = 20
     Array(msg).each do |m|
       git_log(options[:git], m)
-      http_post(url, {'murmur[body]' => m}, options)
+      http_post(url, {:murmur => {:body => m}}, options)
     end
   end
 
@@ -69,9 +70,14 @@ module Murmurs
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
     end
+    body = params.to_json
 
     request = Net::HTTP::Post.new(uri.request_uri)
-    request.form_data = params if params
+    request.body = body
+
+    request['Content-Type'] = 'application/json'
+    request['Content-Length'] = body.bytesize
+
 
     if options[:access_key_id]
       ApiAuth.sign!(request, options[:access_key_id], options[:access_secret_key])
