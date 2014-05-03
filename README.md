@@ -3,14 +3,21 @@ Murmurs
 
 Murmurs is a rubygem provides command to post a murmur message to your Mingle project.
 
-Murmur
+Installation
 ----------------
 
-After installed gem, please run:
+    gem install murmurs
 
-    murmurs -h
+A command 'murmurs' will be installed.
 
-For details of how to config and post murmur to your project.
+Usage
+----------------
+
+After configured your Mingle project, your can type:
+
+    murmurs "Murmurs Git integration is done. Our git commits will stream to our project's Murmurs."
+
+Type "murmurs -h" for full help.
 
 Integrate Mingle Murmurs with Git
 ----------------
