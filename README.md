@@ -1,7 +1,9 @@
 Murmurs
 ================
 
-Murmurs is a rubygem provides command to post a murmur message to your Mingle project.
+Murmurs is a rubygem provides commands to post a murmur message to your Mingle project.
+
+Ruby 1.9+ is required.
 
 Installation
 ----------------
@@ -13,9 +15,27 @@ A command 'murmurs' will be installed.
 Usage
 ----------------
 
-After configured your Mingle project, your can type:
+For posting a murmur on your Mingle project, you need specify:
 
-    murmurs "Murmurs Git integration is done. Our git commits will stream to our project's Murmurs."
+1. Mingle murmurs URL. It is pointing to your Mingle site and project murmurs api endpoint.
+   Example: https://site-name.mingle-api.thoughtworks.com/api/v2/projects/your_project/murmurs.xml
+2. Mingle user HMAC auth access key id and Mingle user HMAC auth access secret key. Every user can generate one HMAC secret key from his or her profile page under the HMAC Auth Key tab.
+   For further information about Mingle user access key id and secure key, please read:
+   http://www.thoughtworks.com/products/docs/mingle/current/help/configuring_hmac_authentication.html
+
+Example:
+
+    murmurs -m https://site-name.mingle-api.thoughtworks.com/api/v2/projects/your_project/murmurs.xml -k mingle_access_key_id -s mingle_access_secure_key  "Murmurs Git integration is done. Our git commits will stream to our project's Murmurs."
+
+You can also setup environment variables for the configurations needed:
+
+    export MINGLE_MURMURS_URL=https://site-name.mingle-api.thoughtworks.com/api/v2/projects/your_project/murmurs.xml
+    export MINGLE_ACCESS_KEY_ID=mingle_access_key_id
+    export MINGLE_ACCESS_SECRET_KEY=mingle_access_secret_key
+
+So that you don't need to specify them when murmur something:
+
+    murmurs "text"
 
 Type "murmurs -h" for full help.
 
@@ -24,7 +44,7 @@ Integrate Mingle Murmurs with Git
 
 On your Git server:
 
-    install ruby
+    install ruby 1.9+
     install rubygems if there was no one installed with ruby
     gem install murmurs
 
@@ -39,6 +59,3 @@ Then, in the git repository, we need setup the following configs:
     git config hooks.minglemurmursurl "https://your-site.mingle-api.thoughtworks.com/api/v2/projects/your_project/murmurs.xml"
     git config hooks.mingleaccesskeyid <Mingle user access key id>
     git config hooks.mingleaccesssecretkey <Mingle user access secret key>
-
-For further information about Mingle user access key id and secure key, please read:
-http://www.thoughtworks.com/products/docs/mingle/current/help/configuring_hmac_authentication.html
