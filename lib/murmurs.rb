@@ -71,7 +71,9 @@ module Murmurs
              end
       `git rev-list #{revs}`.split("\n").map do |rev|
         `git log -n 1 #{rev}`
-      end.reverse
+      end.reverse.map do |msg|
+        "Repository: #{File.basename(Dir.getwd)}\n#{msg}"
+      end
     end
   end
 
