@@ -70,7 +70,7 @@ module Murmurs
              end
       `git rev-list #{revs}`.split("\n").map do |rev|
         `git log -n 1 #{rev}`
-      end
+      end.reverse
     end
   end
 
