@@ -6,6 +6,7 @@ require 'json'
 
 module Murmurs
   class InvalidMurmursURLError < StandardError; end
+  class UnexpectedResponseError < StandardError; end
 
   def murmur(url, msg, options={})
     if options[:git]
@@ -99,7 +100,11 @@ module Murmurs
     response = http.request(request)
 
     if response.code.to_i > 300
-      response.error!
+      raise UnexpectedResponseError, <<-ERROR
+\nRequest URL: #{url}
+Response: #{response.code} #{response.message}
+Response Headers: #{response.to_hash.inspect}\nResponse Body: #{response.body}"
+ERROR
     end
   end
 end

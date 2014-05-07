@@ -80,4 +80,10 @@ GIT_INPUT
   def test_extract_project_info
     assert_equal 'proj@host', extract_project_info('https://host/api/v2/projects/proj/murmurs.xml')
   end
+
+  def test_http_post_error_handling
+    assert_raise Murmurs::UnexpectedResponseError do
+      http_post('https://n-o-tsddfs.mingle.thoughtworks.com', {})
+    end
+  end
 end
