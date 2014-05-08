@@ -9,18 +9,19 @@ module Murmurs
   class UnexpectedResponseError < StandardError; end
 
   def murmur(url, msg, options={})
+    if msg.nil? || msg.empty?
+      log(options[:log_level], "Nothing to murmur.")
+      return
+    end
+
+    log(options[:log_level], "murmur => #{extract_project_info(url)}")
     if options[:git]
       Array(git_commits(msg, options[:git_branch])).each do |msg|
-        murmur(url, msg, options.merge(:git => false))
+        murmur(url, msg, options.merge(:git => false, :log_level => :error))
       end
     else
       validate_murmurs_url!(url)
-      if msg.nil? || msg.empty?
-        log(options[:log_level], "Nothing to murmur.")
-      else
-        log(options[:log_level], "murmur #{truncate(msg)} => #{extract_project_info(url)}")
-        http_post(url, {:murmur => {:body => msg}}, options)
-      end
+      http_post(url, {:murmur => {:body => msg}}, options)
     end
   end
 
