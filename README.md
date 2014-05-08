@@ -34,14 +34,15 @@ You can also setup environment variables for the configurations needed as follow
     export MINGLE_ACCESS_KEY_ID=mingle_access_key_id
     export MINGLE_ACCESS_SECRET_KEY=mingle_access_secret_key
 
-So that you don't need to specify them when murmur something:
+So that you don't need to specify them when you murmur something:
 
     murmurs "text"
 
 Type "murmurs -h" for full help.
 
-Integrate Mingle Murmurs with Git
+Integrating Mingle Murmurs with Git
 ----------------
+Murmurs gem can be used to integrate with Git. Use the following instructions to setup your git server so that it murmurs everytime something has been pushed to the server.
 
 On your Git server:
 
