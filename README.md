@@ -2,6 +2,7 @@ Murmurs
 ================
 
 Murmurs is a rubygem provides commands to post a murmur message to your Mingle project.
+And Git post-receive hook to post murmurs when new commits pushed to Git server.
 
 Ruby 1.9+ is required.
 
@@ -52,10 +53,13 @@ murmurs gem should install a new command 'murmurs-git' (In some OS, the script n
 
 Install the git hook for post-receive:
 
-    murmurs-git <mingle repository path>
+    murmurs-git <git repository path>
 
 Then, in the git repository, setup the following configs:
 
     git config hooks.minglemurmursurl "https://your-site.mingle-api.thoughtworks.com/api/v2/projects/your_project/murmurs.xml"
     git config hooks.mingleaccesskeyid <Mingle user access key id>
     git config hooks.mingleaccesssecretkey <Mingle user access secret key>
+
+Note, if murmurs-git script got renamed to murmurs-git1.9 on your OS, another command "murmurs" probably will also be renamed to "murmurs1.9".
+The git post-receive hook installed in your <git repository path>/hooks (or <git repository path>/.git/hooks) directory is calling "murmurs" command to post murmur to Mingle, so you need change command "murmurs" in the post-recieve hook to be "murmurs1.9"

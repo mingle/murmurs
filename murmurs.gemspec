@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name = 'murmurs'
-  s.version = '0.0.4'
+  s.version = '0.0.6'
   s.summary = 'Post murmur to Mingle project murmurs'
   s.description = <<-EOF
-Use HMAC to create murmur in Mingle project.
+Post murmur to your Mingle project from command line.
 Git post-receive hook to post murmurs when new commits pushed to Git server.
 EOF
   s.license = 'MIT'
