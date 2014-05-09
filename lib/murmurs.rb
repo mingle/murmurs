@@ -3,10 +3,14 @@ require 'net/https'
 require 'time'
 require 'api-auth'
 require 'json'
+require 'murmurs/git'
 
 module Murmurs
   class InvalidMurmursURLError < StandardError; end
   class UnexpectedResponseError < StandardError; end
+  class HookExistsError < StandardError; end
+
+  include Git
 
   def murmur(url, msg, options={})
     if msg.nil? || msg.empty?
@@ -46,35 +50,6 @@ module Murmurs
   def log(level, m)
     if level == :info
       puts m
-    end
-  end
-
-  # input: git post receive stdin string
-  # branch: git branch
-  def git_commits(input, branch)
-    data = input.split("\n").map do |l|
-      l.split
-    end.find do |l|
-      l[2] =~ /\Arefs\/heads\/#{branch}\z/
-    end
-
-    return if data.nil?
-
-    null_rev = '0' * 40
-    from_rev, to_rev, _ = data
-    if to_rev == null_rev # delete branch
-      "Someone deleted branch #{branch}."
-    else
-      revs = if from_rev == null_rev  # new branch
-               to_rev
-             else
-               "#{from_rev}..#{to_rev}"
-             end
-      `git rev-list #{revs}`.split("\n").map do |rev|
-        `git log -n 1 #{rev}`
-      end.reverse.map do |msg|
-        "Repository: #{File.basename(Dir.getwd)}\n#{msg}"
-      end
     end
   end
 
