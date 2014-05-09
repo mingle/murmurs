@@ -35,6 +35,7 @@ echo "$(cat)" | #{script} -g -b master -m "$mingle_murmurs_url" -k "$mingle_acce
 BASH
       end
       FileUtils.chmod('+x', hook)
+      hook
     end
 
     # input: git post receive stdin string

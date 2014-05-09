@@ -21,7 +21,9 @@ class GitInstallTest < Test::Unit::TestCase
   end
 
   def test_install_git_hook
-    install_git_hook(@git_dir, @murmur_script)
+    installed_hook = install_git_hook(@git_dir, @murmur_script)
+    assert_equal @hook, installed_hook
+
     expected = <<-BASH
 #!/usr/bin/env bash
 
