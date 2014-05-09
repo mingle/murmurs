@@ -15,7 +15,7 @@ EOF
   s.add_dependency "json", ">= 1.8.1"
 
   s.bindir = "bin"
-  s.executables = ["murmurs", "murmurs-git"]
+  s.executables = ["murmurs"]
 
   s.files = ['README.md']
   s.files += Dir['bin/**/*']
