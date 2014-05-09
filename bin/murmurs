@@ -24,6 +24,16 @@ For further information about Mingle user access key id and secure key, please r
 http://www.thoughtworks.com/products/docs/mingle/current/help/configuring_hmac_authentication.html
 }
 
+GIT_INTALLATION_NOTES = %Q{
+Please setup the following git config:
+git config hooks.minglemurmursurl "https://<your_site>.mingle.thoughtworks.com/api/v2/pro
+git config hooks.mingleaccesskeyid "MINGLE ACCESS KEY ID"
+git config hooks.mingleaccesssecretkey "MINGLE ACCESS SECRET KEY"
+
+For further information about MINGLE ACCESS KEY ID and MINGLE ACCESS SECRET KEY, please read:
+http://www.thoughtworks.com/products/docs/mingle/current/help/configuring_hmac_authentication.html
+}
+
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: murmurs [options] MESSAGE"
 
@@ -69,20 +79,15 @@ end.parse!
 
 include Murmurs
 
-if git_repo_path = options[:install_git_hook]
-  hook = install_git_hook(git_repo_path, __FILE__)
-  puts "Installed #{hook}"
-  puts "Please setup the following git config:"
-  puts %Q{
-git config hooks.minglemurmursurl "https://<your_site>.mingle.thoughtworks.com/api/v2/pro
-git config hooks.mingleaccesskeyid "MINGLE ACCESS KEY ID"
-git config hooks.mingleaccesssecretkey "MINGLE ACCESS SECRET KEY"
-
-For further information about MINGLE ACCESS KEY ID and MINGLE ACCESS SECRET KEY, please read:
-http://www.thoughtworks.com/products/docs/mingle/current/help/configuring_hmac_authentication.html
-}
-
-else
-  msg = ARGV[0] || (STDIN.tty? ? nil : STDIN.read)
-  murmur(options.delete(:murmurs_url), msg, options)
+begin
+  if git_repo_path = options[:install_git_hook]
+    hook = install_git_hook(git_repo_path, __FILE__)
+    puts "Installed #{hook}"
+    puts GIT_INTALLATION_NOTES
+  else
+    msg = ARGV[0] || (STDIN.tty? ? nil : STDIN.read)
+    murmur(options.delete(:murmurs_url), msg, options)
+  end
+rescue Error => e
+  puts e.message
 end

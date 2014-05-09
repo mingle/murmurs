@@ -6,9 +6,10 @@ require 'json'
 require 'murmurs/git'
 
 module Murmurs
-  class InvalidMurmursURLError < StandardError; end
-  class UnexpectedResponseError < StandardError; end
-  class HookExistsError < StandardError; end
+  class Error < StandardError; end
+  class InvalidMurmursURLError < Error; end
+  class UnexpectedResponseError < Error; end
+  class HookExistsError < Error; end
 
   include Git
 

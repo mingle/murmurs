@@ -31,7 +31,7 @@ mingle_murmurs_url=$(git config hooks.minglemurmursurl)
 mingle_access_key_id=$(git config hooks.mingleaccesskeyid)
 mingle_access_secret_key=$(git config hooks.mingleaccesssecretkey)
 
-echo "$(cat)" | #{@murmur_script} -g -b master -m "$mingle_murmurs_url" -k "$mingle_access_key_id" -s "$mingle_access_secret_key"
+echo "$(cat)" | #{@murmur_script.inspect} -g -b master -m "$mingle_murmurs_url" -k "$mingle_access_key_id" -s "$mingle_access_secret_key"
 BASH
     assert_equal expected, File.read(@hook)
   end
