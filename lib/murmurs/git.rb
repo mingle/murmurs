@@ -11,7 +11,7 @@ module Murmurs
         if File.exists?(hooks)
           hooks
         else
-          raise "Could not find hooks dir or .git/hooks dir in #{git_repo_dir}"
+          raise "Could not find \"hooks\" dir or \".git/hooks\" dir in #{git_repo_dir}"
         end
       end
     end

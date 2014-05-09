@@ -27,6 +27,9 @@ http://www.thoughtworks.com/products/docs/mingle/current/help/configuring_hmac_a
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: murmurs [options] MESSAGE"
 
+  opts.on("-a", "--install_git_hook GIT_REPOSITORY_PATH", "install git hook post-receive to the given git repository") do |v|
+    options[:install_git_hook] = v
+  end
   opts.on("-m", "--murmurs_url MINGLE_MURMURS_URL", "Mingle project murmurs url") do |v|
     options[:murmurs_url] = v
   end
@@ -66,5 +69,9 @@ end.parse!
 
 include Murmurs
 
-msg = ARGV[0] || (STDIN.tty? ? nil : STDIN.read)
-murmur(options.delete(:murmurs_url), msg, options)
+if git_repo_path = options[:install_git_hook]
+  install_git_hook(git_repo_path, __FILE__)
+else
+  msg = ARGV[0] || (STDIN.tty? ? nil : STDIN.read)
+  murmur(options.delete(:murmurs_url), msg, options)
+end
