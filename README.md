@@ -11,7 +11,7 @@ Installation
 
     gem install murmurs
 
-A command 'murmurs' will be installed.
+A command 'murmurs' will be installed. (In some OS, the script name maybe changed to murmurs1.9 for ruby 1.9)
 
 Usage
 ----------------
@@ -50,17 +50,14 @@ On your Git server:
     install rubygems if there was no one installed with ruby
     gem install murmurs
 
-murmurs gem should install a new command 'murmurs-git' (In some OS, the script name maybe changed to murmurs-git1.9 for ruby 1.9)
+murmurs gem should install a new command 'murmurs'
 
 Install the git hook for post-receive:
 
-    murmurs-git <git repository path>
+    murmurs -a <git repository path>
 
 Then, in the git repository, setup the following configs:
 
     git config hooks.minglemurmursurl "https://your-site.mingle-api.thoughtworks.com/api/v2/projects/your_project/murmurs.xml"
     git config hooks.mingleaccesskeyid <Mingle user access key id>
     git config hooks.mingleaccesssecretkey <Mingle user access secret key>
-
-Note, if murmurs-git script got renamed to murmurs-git1.9 on your OS, another command "murmurs" probably will also be renamed to "murmurs1.9".
-The git post-receive hook installed in your <git repository path>/hooks (or <git repository path>/.git/hooks) directory is calling "murmurs" command to post murmur to Mingle, so you need change command "murmurs" in the post-recieve hook to be "murmurs1.9"
