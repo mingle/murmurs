@@ -64,7 +64,7 @@ BASH
           `git log -n 1 #{rev}`
         end.reverse.map do |msg|
           lines = msg.split("\n")
-          commit = lines[0][8..15]
+          commit = lines[0][8..20]
           author = lines[1]
           time = lines[2]
           msg = lines[3..-1]
@@ -73,7 +73,7 @@ BASH
 
 #{msg.join("\n").strip}
 
-commit #{repo_name}:#{commit}
+commit #rev-#{commit} (#{repo_name})
 #{time}
 MURMUR
         end

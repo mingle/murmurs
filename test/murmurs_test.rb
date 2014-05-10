@@ -53,14 +53,14 @@ GIT_INPUT
     assert_equal 5, @requests.size
 
     m1 = {
-      :body => "{\"murmur\":{\"body\":\"Author: Xiao Li <swing1979@gmail.com>\\n\\nadd -g and -b options to murmur git changes from git post-receive hook stdin\\n\\ncommit murmurs:ff0fbd52\\nDate:   Thu May 1 20:51:07 2014 -0700\\n\"}}",
-      :content_length => 207,
+      :body => "{\"murmur\":{\"body\":\"Author: Xiao Li <swing1979@gmail.com>\\n\\nadd -g and -b options to murmur git changes from git post-receive hook stdin\\n\\ncommit #rev-ff0fbd522c3ef (murmurs)\\nDate:   Thu May 1 20:51:07 2014 -0700\\n\"}}",
+      :content_length => 219,
       :content_type => "application/json"
     }
     assert_equal(m1, @requests[0])
     m5 = {
-      :body => "{\"murmur\":{\"body\":\"Author: Xiao Li <swing1979@gmail.com>\\n\\nadd license and update authors name\\n\\ncommit murmurs:91bab265\\nDate:   Fri May 2 07:46:16 2014 -0700\\n\"}}",
-      :content_length => 166,
+      :body => "{\"murmur\":{\"body\":\"Author: Xiao Li <swing1979@gmail.com>\\n\\nadd license and update authors name\\n\\ncommit #rev-91bab265eac6f (murmurs)\\nDate:   Fri May 2 07:46:16 2014 -0700\\n\"}}",
+      :content_length => 178,
       :content_type => "application/json"
     }
     assert_equal(m5, @requests[4])
