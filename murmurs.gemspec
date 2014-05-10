@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'murmurs'
-  s.version = '0.0.8'
+  s.version = '0.0.9'
   s.summary = 'Post murmur to Mingle project murmurs'
   s.description = <<-EOF
 Post murmur to your Mingle project from command line.
