@@ -54,6 +54,7 @@ BASH
       if to_rev == null_rev # delete branch
         "Someone deleted branch #{branch}."
       else
+        repo_name = File.basename(Dir.getwd)
         revs = if from_rev == null_rev  # new branch
                  to_rev
                else
@@ -62,7 +63,19 @@ BASH
         `git rev-list #{revs}`.split("\n").map do |rev|
           `git log -n 1 #{rev}`
         end.reverse.map do |msg|
-          "Repository: #{File.basename(Dir.getwd)}\n#{msg}"
+          lines = msg.split("\n")
+          commit = lines[0][8..15]
+          author = lines[1]
+          time = lines[2]
+          msg = lines[3..-1]
+          <<-MURMUR
+#{author}
+
+#{msg.join("\n").strip}
+
+commit #{repo_name}:#{commit}
+#{time}
+MURMUR
         end
       end
     end
