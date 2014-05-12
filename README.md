@@ -1,48 +1,17 @@
 Murmurs
 ================
 
-Murmurs is a rubygem provides commands to post a murmur message to your Mingle project.
-And Git post-receive hook to post murmurs when new commits pushed to Git server.
+Murmurs is a rubygem for integrating Git with your Mingle project.
 
-Ruby 1.9+ is required.
-
-Installation
-----------------
-
-    gem install murmurs
-
-A command 'murmurs' will be installed. (In some OS, the script name maybe changed to murmurs1.9 for ruby 1.9)
+Ruby 1.9+ is required. Windows is not supported.
 
 Usage
 ----------------
 
-For posting a murmur on your Mingle project, you need specify:
+What you need from your Mingle site/project:
 
-1. Mingle murmurs URL. It is pointing to your Mingle site and project murmurs api endpoint.
-   Example: https://site-name.mingle-api.thoughtworks.com/api/v2/projects/your_project/murmurs.xml
-2. Mingle uses HMAC auth access key id and HMAC auth access secret key. Every user can generate one HMAC secret key from his or her profile page under the HMAC Auth Key tab.
-   For further information about Mingle user access key id and secret key, please read:
-   http://www.thoughtworks.com/products/docs/mingle/current/help/configuring_hmac_authentication.html
-
-Example:
-
-    murmurs -m https://site-name.mingle-api.thoughtworks.com/api/v2/projects/your_project/murmurs.xml -k mingle_access_key_id -s mingle_access_secure_key  "Murmurs Git integration is done. Our git commits will stream to our project's Murmurs."
-
-You can also setup environment variables for the configurations needed as follows:
-
-    export MINGLE_MURMURS_URL=https://site-name.mingle-api.thoughtworks.com/api/v2/projects/your_project/murmurs.xml
-    export MINGLE_ACCESS_KEY_ID=mingle_access_key_id
-    export MINGLE_ACCESS_SECRET_KEY=mingle_access_secret_key
-
-So that you don't need to specify them when you murmur something:
-
-    murmurs "text"
-
-Type "murmurs -h" for full help.
-
-Integrating Mingle Murmurs with Git
-----------------
-Murmurs gem can be used to integrate with Git. Use the following instructions to setup your git server so that it murmurs everytime something has been pushed to the server.
+1. Mingle project murmurs URL. You can get it by substituting your site name and project identifier to the following URL: https://<your-site>.mingle-api.thoughtworks.com/api/v2/projects/<your-project>/murmurs.xml
+2. HMAC auth access key id and access secret key to access your Mingle project. You can get it from existing team member, or create a new user and add the user to your project. The HMAC auth access key id and access secret key is generated at "HMAC Auth Key" tab on user's profile page. For further information about Mingle user access key id and secret key, please read: http://www.thoughtworks.com/products/docs/mingle/current/help/configuring_hmac_authentication.html
 
 On your Git server:
 
@@ -50,14 +19,32 @@ On your Git server:
     install rubygems if there was no one installed with ruby
     gem install murmurs
 
-murmurs gem should install a new command 'murmurs'
+murmurs gem should install a new command 'murmurs' (In some OS, the script name maybe changed to murmurs1.9 for ruby 1.9).
 
-Install the git hook for post-receive:
+Install the git hook post-receive (you may need to execute as the user having write permission to the git repository path) on Git server:
 
     murmurs -a <git repository path>
 
 Then, in the git repository, setup the following configs:
 
-    git config hooks.minglemurmursurl "https://your-site.mingle-api.thoughtworks.com/api/v2/projects/your_project/murmurs.xml"
+    git config hooks.minglemurmursurl "https://<your-site>.mingle-api.thoughtworks.com/api/v2/projects/<your-project>/murmurs.xml"
     git config hooks.mingleaccesskeyid <Mingle user access key id>
     git config hooks.mingleaccesssecretkey <Mingle user access secret key>
+
+After installed, try push a new commit to the server, and you should see something like the followings in your console:
+
+    remote: murmur => your-project@your-site.mingle-api.thoughtworks.com
+
+Note, the post-receive hook installed will never block you push commits to server, because Git calls the hook after the push work is done.
+
+Test Git integration
+-------------------
+
+To confirm you can post a murmur o your Mingle project from the Git server with the configurations, you can run the following command:
+
+    murmurs -m https://site-name.mingle-api.thoughtworks.com/api/v2/projects/your_project/murmurs.xml -k mingle_access_key_id -s mingle_access_secure_key  "This is a test."
+
+Type "murmurs -h" for full details.
+
+
+So before you integrate Git server with your Mingle project, you can test the configurations on your Git server first, for example:

@@ -26,7 +26,7 @@ http://www.thoughtworks.com/products/docs/mingle/current/help/configuring_hmac_a
 
 GIT_INTALLATION_NOTES = %Q{
 Please setup the following git config:
-git config hooks.minglemurmursurl "https://<your_site>.mingle.thoughtworks.com/api/v2/pro
+git config hooks.minglemurmursurl "https://<your-site>.mingle-api.thoughtworks.com/api/v2/projects/<your-project>/murmurs.xml"
 git config hooks.mingleaccesskeyid "MINGLE ACCESS KEY ID"
 git config hooks.mingleaccesssecretkey "MINGLE ACCESS SECRET KEY"
 
