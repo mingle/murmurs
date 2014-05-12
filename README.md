@@ -42,14 +42,14 @@ Test Git integration
 
 If you had concerns and want to try out before moving to production environment, try the followings:
 
-1. Create a local git repository
+Create a local git repository
 
     cd /tmp
     mkdir mingle_test
     cd mingle_test
     git init --bare
 
-2. Setup murmurs git integration
+Setup murmurs git integration
 
     murmurs -a /tmp/mingle_test
     cd /tmp/mingle_test
@@ -57,12 +57,12 @@ If you had concerns and want to try out before moving to production environment,
     git config hooks.mingleaccesskeyid <Mingle user access key id>
     git config hooks.mingleaccesssecretkey <Mingle user access secret key>
 
-3. Clone a local test repository
+Clone a local test repository
 
     cd /tmp
     git clone mingle_test mingle_test_local
 
-4. Make an empty commit and push to origin master to trigger post-receive hook on origin repository
+Make an empty commit and push to origin master to trigger post-receive hook on origin repository
 
     cd mingle_test_local
     git commit --allow-empty -m "hello world, this is git mingle integration test"
