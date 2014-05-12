@@ -40,7 +40,7 @@ Note, the post-receive hook installed will never block you push commits to serve
 Test Git integration
 -------------------
 
-If you had concerns and want to try out before moving to production environment, try the followings:
+If you had concerns and want to try out before moving to production environment, you can try the followings to get the idea of how your Git server will integrate with your Mingle project. (Please install murmurs gem, and get all configurations mentioned above ready before you start)
 
 Create a local git repository
 
