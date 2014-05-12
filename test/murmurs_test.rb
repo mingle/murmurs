@@ -83,7 +83,7 @@ GIT_INPUT
 
   def test_http_post_error_handling
     assert_raise Murmurs::UnexpectedResponseError do
-      http_post('https://n-o-tsddfs.mingle.thoughtworks.com', {})
+      http_post('http://localhost:1234/not_exist', "")
     end
   end
 

@@ -2,7 +2,6 @@ require 'net/http'
 require 'net/https'
 require 'time'
 require 'api-auth'
-require 'json'
 require 'murmurs/git'
 
 module Murmurs
@@ -26,7 +25,7 @@ module Murmurs
       end
     else
       validate_murmurs_url!(url)
-      http_post(url, {:murmur => {:body => msg}}, options)
+      http_post(url, "{\"murmur\":{\"body\":#{msg.inspect}}}", options)
     end
   end
 
@@ -54,7 +53,7 @@ module Murmurs
     end
   end
 
-  def http_post(url, params, options={})
+  def http_post(url, body, options={})
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     if uri.scheme == 'https'
@@ -63,7 +62,6 @@ module Murmurs
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
     end
-    body = params.to_json
 
     request = Net::HTTP::Post.new(uri.request_uri)
     request.body = body
