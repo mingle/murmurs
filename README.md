@@ -40,11 +40,39 @@ Note, the post-receive hook installed will never block you push commits to serve
 Test Git integration
 -------------------
 
-To confirm you can post a murmur o your Mingle project from the Git server with the configurations, you can run the following command:
+If you had concerns and want to try out before moving to production environment, try the followings:
+
+1. Create a local git repository
+
+    cd /tmp
+    mkdir mingle_test
+    cd mingle_test
+    git init --bare
+
+2. Setup murmurs git integration
+
+    murmurs -a /tmp/mingle_test
+    cd /tmp/mingle_test
+    git config hooks.minglemurmursurl "https://<your-site>.mingle-api.thoughtworks.com/api/v2/projects/<your-project>/murmurs.xml"
+    git config hooks.mingleaccesskeyid <Mingle user access key id>
+    git config hooks.mingleaccesssecretkey <Mingle user access secret key>
+
+3. Clone a local test repository
+
+    cd /tmp
+    git clone mingle_test mingle_test_local
+
+4. Make an empty commit and push to origin master to trigger post-receive hook on origin repository
+
+    cd mingle_test_local
+    git commit --allow-empty -m "hello world, this is git mingle integration test"
+    git push origin master
+
+Test post a murmur on your project
+-------------------
+
+To confirm you can post a murmur to your Mingle project from the Git server with the configurations, you can run the following command:
 
     murmurs -m https://site-name.mingle-api.thoughtworks.com/api/v2/projects/your_project/murmurs.xml -k mingle_access_key_id -s mingle_access_secure_key  "This is a test."
 
-Type "murmurs -h" for full details.
-
-
-So before you integrate Git server with your Mingle project, you can test the configurations on your Git server first, for example:
+Type "murmurs -h" for full details of the options available.
