@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name = 'murmurs'
   s.version = '0.1.1'
-  s.summary = 'Post murmur to Mingle project murmurs'
+  s.summary = 'Integrate Git with your Mingle project'
   s.description = <<-EOF
-Post murmur to your Mingle project from command line.
-Git post-receive hook to post murmurs when new commits pushed to Git server.
+Itegrate Git with your Mingle project by posting murmurs to your Mingle project when new commits got pushed to Git server.
+This gem provides command to generate Git post-receive hook and post murmurs to your Mingle project.
 EOF
   s.license = 'MIT'
   s.authors = ["ThoughtWorks Mingle Team"]
