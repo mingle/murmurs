@@ -10,7 +10,7 @@ Usage
 
 What you need from your Mingle site/project:
 
-1. Mingle project murmurs URL. You can get it by substituting your site name and project identifier to the following URL: https://<your-site>.mingle-api.thoughtworks.com/api/v2/projects/<your-project>/murmurs.xml
+1. Mingle project murmurs URL. You can get it by substituting your site name and project identifier to the following URL: https://<#your-site>.mingle-api.thoughtworks.com/api/v2/projects/<#your-project>/murmurs.xml
 2. HMAC auth access key id and access secret key to access your Mingle project. You can get it from existing team member, or create a new user and add the user to your project. The HMAC auth access key id and access secret key is generated at "HMAC Auth Key" tab on user's profile page. For further information about Mingle user access key id and secret key, please read: http://www.thoughtworks.com/products/docs/mingle/current/help/configuring_hmac_authentication.html
 
 On your Git server:
