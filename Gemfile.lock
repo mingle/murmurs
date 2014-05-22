@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    murmurs (0.1.2)
+    murmurs (0.1.3)
       api-auth (>= 1.0.3)
 
 GEM

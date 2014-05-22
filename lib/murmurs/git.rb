@@ -64,7 +64,7 @@ BASH
           `git log -n 1 #{rev}`
         end.reverse.map do |msg|
           lines = msg.split("\n")
-          commit = lines[0][8..20]
+          commit = lines[0].split(' ')[1][0..13]
           author = lines[1]
           time = lines[2]
           msg = lines[3..-1]
