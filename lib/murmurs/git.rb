@@ -65,14 +65,19 @@ BASH
         end.reverse.map do |msg|
           lines = msg.split("\n")
           commit = lines[0].split(' ')[1][0..13]
-          author = lines[1]
+          author = if lines[1] =~ /Author: ([^<]+)\s*<([^>]+)>/
+                     name = $1.strip
+                     email = $2.strip
+                     name = name.empty? ? email.split("@").first : name
+                     "[#{name}](mailto:#{email})"
+                   else
+                     lines[1]
+                   end
           time = lines[2]
           msg = lines[3..-1]
           <<-MURMUR
-#{author}
-
+Author: #{author}
 #{msg.join("\n").strip}
-
 commit #rev-#{commit} (#{repo_name})
 #{time}
 MURMUR

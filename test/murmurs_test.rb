@@ -53,17 +53,20 @@ GIT_INPUT
     assert_equal 5, @requests.size
 
     m1 = {
-      :body => "{\"murmur\":{\"body\":\"Author: Xiao Li <swing1979@gmail.com>\\n\\nadd -g and -b options to murmur git changes from git post-receive hook stdin\\n\\ncommit #rev-3ff0fbd522c3ef (murmurs)\\nDate:   Thu May 1 20:51:07 2014 -0700\\n\"}}",
-      :content_length => 220,
+      :body => "{\"murmur\":{\"body\":\"Author: [Xiao Li](mailto:swing1979@gmail.com)\\nadd -g and -b options to murmur git changes from git post-receive hook stdin\\ncommit #rev-3ff0fbd522c3ef (murmurs)\\nDate:   Thu May 1 20:51:07 2014 -0700\\n\"}}",
       :content_type => "application/json"
     }
-    assert_equal(m1, @requests[0])
+    assert_equal(m1[:body], @requests[0][:body])
+    assert_equal(m1[:content_type], @requests[0][:content_type])
+    assert_equal(@requests[0][:body].size, @requests[0][:content_length])
+
     m5 = {
-      :body => "{\"murmur\":{\"body\":\"Author: Xiao Li <swing1979@gmail.com>\\n\\nadd license and update authors name\\n\\ncommit #rev-d91bab265eac6f (murmurs)\\nDate:   Fri May 2 07:46:16 2014 -0700\\n\"}}",
-      :content_length => 179,
+      :body => "{\"murmur\":{\"body\":\"Author: [Xiao Li](mailto:swing1979@gmail.com)\\nadd license and update authors name\\ncommit #rev-d91bab265eac6f (murmurs)\\nDate:   Fri May 2 07:46:16 2014 -0700\\n\"}}",
       :content_type => "application/json"
     }
-    assert_equal(m5, @requests[4])
+    assert_equal(m5[:body], @requests[4][:body])
+    assert_equal(m5[:content_type], @requests[4][:content_type])
+    assert_equal(@requests[4][:body].size, @requests[4][:content_length])
   end
 
   def test_murmur_nothing
