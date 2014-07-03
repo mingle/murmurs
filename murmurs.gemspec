@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'murmurs'
-  s.version = '0.1.4'
+  s.version = '0.1.5'
   s.summary = 'Integrate Git with your Mingle project'
   s.description = <<-EOF
 Itegrate Git with your Mingle project by posting murmurs to your Mingle project when new commits got pushed to Git server.
