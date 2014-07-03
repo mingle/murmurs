@@ -60,6 +60,16 @@ opts = OptionParser.new do |opts|
     options[:git_branch] = v
   end
 
+  opts.on("-u", "--user basic_auth_user_login", "Mingle user login for posting murmur by basic auth instead of HMAC") do |v|
+    options[:basic_auth] ||= {}
+    options[:basic_auth][:user] = v
+  end
+
+  opts.on("-p", "--password basic_auth_user_password", "Mingle user password for posting murmur by basic auth instead of HMAC") do |v|
+    options[:basic_auth] ||= {}
+    options[:basic_auth][:password] = v
+  end
+
   opts.on_tail("-i", "--skip_ssl_verify", "Skip SSL verify in case the server is using self signed SSL certificate, default is false") do
     options[:skip_ssl_verify] = true
   end

@@ -69,7 +69,9 @@ module Murmurs
     request['Content-Type'] = 'application/json'
     request['Content-Length'] = body.bytesize
 
-
+    if options[:basic_auth]
+      request.basic_auth(options[:basic_auth][:user], options[:basic_auth][:password])
+    end
     if options[:access_key_id]
       ApiAuth.sign!(request, options[:access_key_id], options[:access_secret_key])
     end
